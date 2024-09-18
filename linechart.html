@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latihan Chart.js</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h2>Latihan 1: Mengubah Warna Chart</h2>
+        <canvas id="chart1"></canvas>
+      </div>
+      <div class="card">
+        <h2>Latihan 2: Menambah Data Point</h2>
+        <canvas id="chart2"></canvas>
+      </div>
+      <div class="card">
+        <h2>Latihan 3: Menambah Event Listener</h2>
+        <canvas id="chart3"></canvas>
+        <div id="hoverInfo" class="hover-info">
+          Arahkan kursor ke titik data
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Latihan 1: Mengubah warna chart
+      const ctx1 = document.getElementById("chart1").getContext("2d");
+      new Chart(ctx1, {
+        type: "line",
+        data: {
+          labels: ["1", "2", "3", "4", "5"],
+          datasets: [
+            {
+              label: "Data",
+              data: [1, 2, 3, 4, 5],
+              borderColor: "red",
+              backgroundColor: "rgba(255, 0, 0, 0.1)",
+              tension: 0.1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: "Chart Merah",
+              font: {
+                size: 18,
+              },
+            },
+          },
+        },
+      });
+
+      // Latihan 2: Menambah data point
+      const ctx2 = document.getElementById("chart2").getContext("2d");
+      const chart2 = new Chart(ctx2, {
+        type: "line",
+        data: {
+          labels: ["1", "2", "3", "4", "5"],
+          datasets: [
+            {
+              label: "Data",
+              data: [1, 2, 3, 4, 5],
+              borderColor: "blue",
+              backgroundColor: "rgba(0, 0, 255, 0.1)",
+              tension: 0.1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: "Chart dengan Data Point Baru",
+              font: {
+                size: 18,
+              },
+            },
+          },
+        },
+      });
+
+      // Menambah data point baru
+      setTimeout(() => {
+        chart2.data.labels.push("6");
+        chart2.data.datasets[0].data.push(6);
+        chart2.update();
+      }, 2000);
+
+      // Latihan 3: Menambah event listener
+      const ctx3 = document.getElementById("chart3").getContext("2d");
+      const hoverInfo = document.getElementById("hoverInfo");
+      const chart3 = new Chart(ctx3, {
+        type: "line",
+        data: {
+          labels: ["1", "2", "3", "4", "5"],
+          datasets: [
+            {
+              label: "Data",
+              data: [1, 2, 3, 4, 5],
+              borderColor: "green",
+              backgroundColor: "rgba(0, 255, 0, 0.1)",
+              tension: 0.1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: "Chart dengan Event Listener",
+              font: {
+                size: 18,
+              },
+            },
+          },
+          onHover: (event, elements) => {
+            if (elements && elements.length) {
+              const dataIndex = elements[0].index;
+              const dataValue = chart3.data.datasets[0].data[dataIndex];
+              hoverInfo.textContent = `Data index: ${dataIndex}, Nilai: ${dataValue}`;
+            } else {
+              hoverInfo.textContent = "Arahkan kursor ke titik data";
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
